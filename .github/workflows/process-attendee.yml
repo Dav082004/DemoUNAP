@@ -2,7 +2,7 @@ name: Procesar Registro de Asistencia
 
 on:
   issues:
-    types: [opened]
+    types: [opened, labeled]
 
 permissions:
   contents: write
@@ -16,7 +16,17 @@ concurrency:
 
 jobs:
   process:
-    if: contains(github.event.issue.labels.*.name, 'registro-asistencia')
+    # Nota: la label "registro-asistencia" del Issue Form NO se aplica a la
+    # Issue si aún no existe como label del repositorio (comportamiento nativo
+    # de GitHub), así que no podemos depender de ella para el evento "opened".
+    # Como los issues en blanco están deshabilitados (config.yml), toda Issue
+    # "opened" proviene de este formulario y se procesa siempre.
+    # El evento "labeled" queda como mecanismo de recuperación manual: si una
+    # Issue quedó sin procesar, basta con agregarle la label
+    # "registro-asistencia" desde la UI para forzar el reprocesamiento.
+    if: >-
+      github.event.action == 'opened' ||
+      (github.event.action == 'labeled' && github.event.label.name == 'registro-asistencia')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del repositorio
@@ -32,7 +42,10 @@ jobs:
       - name: Ejecutar validación y procesamiento
         id: process
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
+          # Se usa el autor original de la Issue (no github.actor) para que el
+          # mecanismo de recuperación vía evento "labeled" siga registrando al
+          # participante real y no a quien agregó la label manualmente.
+          GITHUB_ACTOR: ${{ github.event.issue.user.login }}
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: python scripts/process_attendee.py
 
@@ -41,15 +54,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue comment "${{ github.event.issue.number }}" --body "⚠️ Hola @${{ github.actor }}, no pudimos procesar tu registro porque el formulario tiene campos inválidos o incompletos. Por favor, abre un nuevo registro usando el formulario oficial y completa todos los campos."
+          gh issue comment "${{ github.event.issue.number }}" --body "⚠️ Hola @${{ github.event.issue.user.login }}, no pudimos procesar tu registro porque el formulario tiene campos inválidos o incompletos. Por favor, abre un nuevo registro usando el formulario oficial y completa todos los campos."
 
       - name: Comentar y cerrar (asistencia duplicada)
         if: steps.process.outputs.error == 'false' && steps.process.outputs.duplicate == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue comment "${{ github.event.issue.number }}" --body "👋 Hola @${{ github.actor }}, tu asistencia ya fue registrada previamente. ¡Gracias por tu entusiasmo, nos vemos en el workshop! 🎉"
-          gh issue close "${{ github.event.issue.number }}" --reason "not_planned"
+          gh issue comment "${{ github.event.issue.number }}" --body "👋 Hola @${{ github.event.issue.user.login }}, tu asistencia ya fue registrada previamente. ¡Gracias por tu entusiasmo, nos vemos en el workshop! 🎉"
+          gh issue close "${{ github.event.issue.number }}" --reason "not_planned" || true
 
       - name: Commit y push del nuevo registro
         if: steps.process.outputs.error == 'false' && steps.process.outputs.duplicate == 'false'
@@ -57,7 +70,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add attendees.json
-          git commit -m "chore: registrar asistencia de @${{ github.actor }}"
+          git commit -m "chore: registrar asistencia de @${{ github.event.issue.user.login }}"
           git pull --rebase origin main
           git push origin HEAD:main
 
@@ -67,4 +80,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh issue comment "${{ github.event.issue.number }}" --body "✅ ¡Listo, ${{ steps.process.outputs.display_name }}! Tu asistencia quedó registrada. Búscate en la página del evento en unos minutos. ¡Nos vemos en el workshop! 🚀"
-          gh issue close "${{ github.event.issue.number }}" --reason "completed"
+          gh issue close "${{ github.event.issue.number }}" --reason "completed" || true

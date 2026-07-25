@@ -55,6 +55,14 @@ Para que el despliegue en GitHub Pages sea rápido y consistente, la interfaz us
 > 1. En **Settings → Actions → General → Workflow permissions**, habilita **Read and write permissions** para que el workflow pueda comentar/cerrar Issues y hacer commit a `main`.
 > 2. En **Settings → Pages**, selecciona **GitHub Actions** como fuente de despliegue.
 
+## Solución de problemas
+
+**Una Issue se creó pero el workflow aparece como "Skipped" en la pestaña Actions.**
+
+Esto ocurre si la label `registro-asistencia` aún no existe como label del repositorio: GitHub **no crea labels automáticamente** a partir de un Issue Form, así que si la label no existía antes de recibir la primera Issue, esta no se le asigna y cualquier condición basada en esa label evalúa `false`. Por eso el workflow ya no depende de esa label para el evento `opened` (ver comentarios en [`process-attendee.yml`](.github/workflows/process-attendee.yml)).
+
+Si de todas formas una Issue quedó sin procesar (por ejemplo, por una versión anterior de este workflow), puedes forzar su reprocesamiento agregándole manualmente la label `registro-asistencia` desde la UI de GitHub (se crea al vuelo si no existe): esto dispara el evento `labeled`, que el workflow también escucha.
+
 ## Estructura del proyecto
 
 ```
