@@ -1,0 +1,70 @@
+name: Procesar Registro de Asistencia
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+# Serializa las ejecuciones para evitar condiciones de carrera al leer y
+# escribir attendees.json cuando llegan varios registros casi al mismo tiempo.
+concurrency:
+  group: attendees-json
+  cancel-in-progress: false
+
+jobs:
+  process:
+    if: contains(github.event.issue.labels.*.name, 'registro-asistencia')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Ejecutar validación y procesamiento
+        id: process
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: python scripts/process_attendee.py
+
+      - name: Comentar campos inválidos
+        if: steps.process.outputs.error == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body "⚠️ Hola @${{ github.actor }}, no pudimos procesar tu registro porque el formulario tiene campos inválidos o incompletos. Por favor, abre un nuevo registro usando el formulario oficial y completa todos los campos."
+
+      - name: Comentar y cerrar (asistencia duplicada)
+        if: steps.process.outputs.error == 'false' && steps.process.outputs.duplicate == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body "👋 Hola @${{ github.actor }}, tu asistencia ya fue registrada previamente. ¡Gracias por tu entusiasmo, nos vemos en el workshop! 🎉"
+          gh issue close "${{ github.event.issue.number }}" --reason "not_planned"
+
+      - name: Commit y push del nuevo registro
+        if: steps.process.outputs.error == 'false' && steps.process.outputs.duplicate == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add attendees.json
+          git commit -m "chore: registrar asistencia de @${{ github.actor }}"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Comentar y cerrar (registro exitoso)
+        if: steps.process.outputs.error == 'false' && steps.process.outputs.duplicate == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body "✅ ¡Listo, ${{ steps.process.outputs.display_name }}! Tu asistencia quedó registrada. Búscate en la página del evento en unos minutos. ¡Nos vemos en el workshop! 🚀"
+          gh issue close "${{ github.event.issue.number }}" --reason "completed"

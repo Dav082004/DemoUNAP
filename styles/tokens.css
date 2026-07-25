@@ -1,0 +1,40 @@
+/* Tokens de diseño — inspirados en la ilustración del lago Titicaca / Puno */
+:root {
+  /* Colores */
+  --color-sky-dark: #1c5d8c;
+  --color-sun: #ffe89a;
+  --color-gold: #e8b84b;
+  --color-gold-dark: #a9711f;
+  --color-lake: #16406b;
+  --color-surface: #fffaf0;
+  --color-surface-alt: #fff3d6;
+  --color-ink: #2b2013;
+  --color-ink-muted: #5c4a30;
+  --color-border: #a9711f;
+  --color-focus: #ffcc4d;
+  --color-overlay: rgba(20, 30, 45, 0.55);
+
+  /* Tipografía */
+  --font-display: "Press Start 2P", "Courier New", monospace;
+  --font-body: "Segoe UI", system-ui, sans-serif;
+  --font-size-sm: 0.85rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.75rem;
+
+  /* Espaciado */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+
+  /* Bordes y sombras */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --shadow-card: 0 6px 16px rgba(20, 20, 40, 0.35);
+  --shadow-card-hover: 0 10px 22px rgba(20, 20, 40, 0.45);
+
+  /* Layout */
+  --max-content-width: 1100px;
+}

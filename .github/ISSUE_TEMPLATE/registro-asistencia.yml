@@ -1,0 +1,46 @@
+name: "📋 Registro de Asistencia al Workshop"
+description: "Regístrate como asistente al GitHub Community & Tools Workshop"
+title: "[Registro] Nueva asistencia"
+labels: ["registro-asistencia"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ¡Bienvenido/a al GitHub Community & Tools Workshop! 🎉
+
+        Completa este formulario para registrar tu asistencia. No necesitas escribir tu
+        usuario de GitHub: el sistema lo detecta automáticamente a partir de tu cuenta
+        autenticada al momento de crear esta Issue.
+
+        Al enviar el formulario, un flujo automatizado (GitHub Actions + Python)
+        validará tus datos y te agregará a la página de asistentes del evento.
+
+  - type: input
+    id: nombre
+    attributes:
+      label: Nombre a mostrar
+      description: El nombre con el que aparecerás en tu tarjeta de asistente.
+      placeholder: "Ej. Juan Pérez"
+    validations:
+      required: true
+
+  - type: input
+    id: tecnologia
+    attributes:
+      label: Tecnología
+      description: ¿Cuál es tu stack, lenguaje o área tecnológica favorita?
+      placeholder: "Ej. React, Python, Machine Learning..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: avatar
+    attributes:
+      label: Selecciona tu avatar
+      description: Elige el avatar que te representará en la página de asistentes. Solo puedes elegir uno.
+      options:
+        - Mona
+        - Copilot
+        - Ducky
+    validations:
+      required: true

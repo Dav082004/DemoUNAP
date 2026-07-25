@@ -1,0 +1,55 @@
+/* Componente: attendee-card */
+.attendee-card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.attendee-card:hover,
+.attendee-card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.attendee-card__avatar {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-gold-dark);
+}
+
+.attendee-card__name {
+  font-weight: 700;
+  color: var(--color-ink);
+  font-size: var(--font-size-md);
+}
+
+.attendee-card__tech {
+  color: var(--color-ink-muted);
+  font-size: var(--font-size-sm);
+}
+
+.attendee-card__link {
+  margin-top: var(--space-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-lake);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+.attendee-card__link:hover,
+.attendee-card__link:focus-visible {
+  border-bottom-color: var(--color-lake);
+}

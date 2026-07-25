@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asistentes — GitHub Community &amp; Tools Workshop</title>
+  <meta
+    name="description"
+    content="Página de asistentes del GitHub Community & Tools Workshop: comunidad, colaboración y herramientas para desarrolladores."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/reset.css" />
+  <link rel="stylesheet" href="styles/layout.css" />
+  <link rel="stylesheet" href="components/attendee-card/attendee-card.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__content">
+      <p class="site-header__eyebrow">GitHub Community &amp; Tools Workshop</p>
+      <h1 class="site-header__title">Comunidad, colaboración y herramientas para desarrolladores</h1>
+      <p class="site-header__subtitle">
+        Registra tu asistencia abriendo una Issue con nuestro
+        <a
+          class="site-header__link"
+          href="https://github.com/Dav082004/DemoUNAP/issues/new?template=registro-asistencia.yml"
+        >formulario de registro</a>. Tu usuario de GitHub se detecta automáticamente.
+      </p>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="attendees" aria-labelledby="attendees-heading">
+      <h2 id="attendees-heading" class="attendees__heading">Asistentes registrados</h2>
+      <p class="attendees__count" id="attendees-count" aria-live="polite">Cargando asistentes…</p>
+      <ul class="attendees__grid" id="attendees-grid"></ul>
+      <p class="attendees__empty" id="attendees-empty" hidden>
+        Aún no hay asistentes registrados. ¡Sé el primero en unirte!
+      </p>
+    </section>
+  </main>
+
+  <template id="attendee-card-template">
+    <li class="attendee-card">
+      <img class="attendee-card__avatar" src="" alt="" width="96" height="96" loading="lazy" />
+      <p class="attendee-card__name"></p>
+      <p class="attendee-card__tech"></p>
+      <a class="attendee-card__link" href="" target="_blank" rel="noopener noreferrer">
+        Ver perfil de GitHub
+      </a>
+    </li>
+  </template>
+
+  <footer class="site-footer">
+    <p>Hecho con 💛 en el GitHub Community &amp; Tools Workshop — Puno</p>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
