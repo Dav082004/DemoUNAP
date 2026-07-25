@@ -61,7 +61,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue comment "${{ github.event.issue.number }}" --body "👋 Hola @${{ github.event.issue.user.login }}, tu asistencia ya fue registrada previamente. ¡Gracias por tu entusiasmo, nos vemos en el workshop! 🎉"
+          gh issue comment "${{ github.event.issue.number }}" --body "👋 Hola @${{ github.event.issue.user.login }}, tu asistencia ya fue registrada previamente. ¡Gracias por tu entusiasmo! 🎉"
           gh issue close "${{ github.event.issue.number }}" --reason "not_planned" || true
 
       - name: Commit y push del nuevo registro
@@ -79,5 +79,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue comment "${{ github.event.issue.number }}" --body "✅ ¡Listo, ${{ steps.process.outputs.display_name }}! Tu asistencia quedó registrada. Búscate en la página del evento en unos minutos. ¡Nos vemos en el workshop! 🚀"
+          gh issue comment "${{ github.event.issue.number }}" --body "✅ ¡Listo, ${{ steps.process.outputs.display_name }}! Tu asistencia quedó registrada. Búscate en la página del evento en unos minutos. ¡Gracias por ser parte del workshop! 🚀"
           gh issue close "${{ github.event.issue.number }}" --reason "completed" || true
