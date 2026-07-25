@@ -86,7 +86,7 @@ Si de todas formas una Issue quedó sin procesar (por ejemplo, por una versión 
 │   └── main.js                       # Fetch + renderizado dinámico
 ├── img/
 │   ├── avatars/                      # Mona, Copilot y Ducky
-│   └── Fondo/                        # Fondo ilustrado del evento
+│   └── fondo/                        # Fondo ilustrado del evento
 ├── attendees.json                    # Base de datos de asistentes
 └── index.html
 ```

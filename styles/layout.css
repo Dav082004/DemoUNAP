@@ -1,6 +1,6 @@
 /* Layout general de la página */
 body {
-  background: url("../img/Fondo/Fondo Vertical.png") no-repeat center top / cover fixed;
+  background: url("../img/fondo/fondo-vertical.png") no-repeat center top / cover fixed;
   background-color: var(--color-sky-dark);
 }
 
@@ -30,6 +30,7 @@ body {
   font-family: var(--font-display);
   font-size: var(--font-size-lg);
   line-height: 1.6;
+  color: whitesmoke ;
 }
 
 .site-header__subtitle {
