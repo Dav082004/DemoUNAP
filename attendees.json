@@ -40,5 +40,11 @@
     "name": "Hector",
     "technology": "C++",
     "avatar": "mona"
+  },
+  {
+    "username": "Fwbenjax",
+    "name": "Benjamin Neyra",
+    "technology": "C++",
+    "avatar": "copilot"
   }
 ]
