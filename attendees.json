@@ -82,5 +82,11 @@
     "name": "Eder",
     "technology": "Python",
     "avatar": "mona"
+  },
+  {
+    "username": "ryugaminemicado",
+    "name": "Issey",
+    "technology": "C++",
+    "avatar": "copilot"
   }
 ]
