@@ -118,5 +118,11 @@
     "name": "Leida Flores",
     "technology": "React",
     "avatar": "mona"
+  },
+  {
+    "username": "rise29",
+    "name": "Pamela Ticona",
+    "technology": "Js",
+    "avatar": "copilot"
   }
 ]
