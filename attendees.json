@@ -172,5 +172,11 @@
     "name": "Ander",
     "technology": "SPRING BOOT",
     "avatar": "ducky"
+  },
+  {
+    "username": "hernanchambilla",
+    "name": "Hernán Chambilla",
+    "technology": "Python",
+    "avatar": "mona"
   }
 ]
