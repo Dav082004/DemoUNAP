@@ -100,5 +100,11 @@
     "name": "Nestor",
     "technology": "Hademi",
     "avatar": "mona"
+  },
+  {
+    "username": "nilsonk7",
+    "name": "Nilson",
+    "technology": "Python",
+    "avatar": "copilot"
   }
 ]
