@@ -4,11 +4,30 @@ body {
   background-color: var(--color-sky-dark);
 }
 
+/* fixed no funciona en iOS; se sobreescribe en móvil */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
 .site-header {
   padding: var(--space-xl) var(--space-md) var(--space-lg);
   text-align: center;
   color: var(--color-surface);
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    padding: var(--space-lg) var(--space-sm) var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    padding: var(--space-md) var(--space-xs) var(--space-sm);
+  }
 }
 
 .site-header__content {
@@ -24,17 +43,33 @@ body {
   font-size: var(--font-size-sm);
   letter-spacing: 0.05em;
   color: var(--color-sun);
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 480px) {
+  .site-header__eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.02em;
+  }
 }
 
 .site-header__title {
   font-family: var(--font-display);
-  font-size: var(--font-size-lg);
-  line-height: 1.6;
-  color: whitesmoke ;
+  font-size: clamp(0.85rem, 2.5vw, var(--font-size-lg));
+  line-height: 1.8;
+  color: whitesmoke;
+  overflow-wrap: break-word;
 }
 
 .site-header__subtitle {
   font-size: var(--font-size-md);
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 480px) {
+  .site-header__subtitle {
+    font-size: var(--font-size-sm);
+  }
 }
 
 .site-header__link {
@@ -49,6 +84,18 @@ body {
   padding: 0 var(--space-md) var(--space-xl);
 }
 
+@media (max-width: 768px) {
+  .main {
+    padding: 0 var(--space-sm) var(--space-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 0 var(--space-xs) var(--space-md);
+  }
+}
+
 .attendees {
   background: var(--color-overlay);
   backdrop-filter: blur(4px);
@@ -57,11 +104,25 @@ body {
   padding: var(--space-lg);
 }
 
+@media (max-width: 768px) {
+  .attendees {
+    padding: var(--space-md);
+    border-radius: var(--radius-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .attendees {
+    padding: var(--space-sm);
+  }
+}
+
 .attendees__heading {
   font-family: var(--font-display);
-  font-size: var(--font-size-lg);
+  font-size: clamp(0.85rem, 2.5vw, var(--font-size-lg));
   color: var(--color-surface);
   margin-bottom: var(--space-xs);
+  overflow-wrap: break-word;
 }
 
 .attendees__count {
@@ -88,4 +149,12 @@ body {
   color: var(--color-surface);
   font-size: var(--font-size-sm);
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 480px) {
+  .site-footer {
+    font-size: 0.75rem;
+    padding: var(--space-sm) var(--space-xs);
+  }
 }
